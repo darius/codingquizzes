@@ -87,46 +87,42 @@ class GapBuffer(object):
 
 
 #Test
-# foo456 -> foobar456 -> foo123bar456
+# foo456 -> foobar456 -> foo123bar456 -> foo123
 # including attempts at empty moves
 
-def put_string_after(string, gap_buffer):
-    print "\ninsert word \"%s\" after the cursor:" % string
+#helper functions for testing
+
+def put_string_after_cursor(string, buffer):
+    print "insert word \"%s\" after the cursor:" % string
     for char in string:
-        gap_buffer.insert_after(char)
-        gap_buffer.show()
+        buffer.insert_after(char)
+        buffer.show()
+
+def move_right(n, buffer):
+    [buffer.move_right() for i in range(n)]
+    print "move right %d chars:" % n
+    buffer.show()
+
+def move_left(n, buffer):
+    [buffer.move_left() for i in range(n)]
+    print "move left %d chars:" % n
+    buffer.show()
+
+# actual test
 
 t = "foo456"
-
-print "========================"
 b = GapBuffer(t)
 b.show()
 print "========================"
-[b.move_right() for i in range(3)]
-print "\nmove right three positions:"
+move_right(3, b)
 b.show()
+put_string_after_cursor("bar", b)
+move_left(7, b) 
+move_right(3, b)
+put_string_after_cursor("123", b)
+move_right(8, b)
+print "delete 6 chars before the cursor:"
 
-put_string_after("bar", b)
- 
-[b.move_left() for i in range(7)]
-print "\nmove left 7 positions (last move empty):"
-b.show()
-
-[b.move_right() for i in range(3)]
-print "\nmove right three positions:"
-b.show()
-
-put_string_after("123", b)
-
-print "========================"
-t = b.save()
-print t
-
-[b.move_right() for i in range(8)]
-print "\nmove right 8 positions:"
-b.show()
-
-print "\ndelete 6 chars before the cursor:"
 for i in range(6):
     b.delete_before()
     b.show()
