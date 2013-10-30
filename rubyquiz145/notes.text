@@ -1,0 +1,51 @@
+I want a doc comment like:
+
+  A GapBuffer is a mutable sequence of characters with a position in it
+  marked out, which we call the cursor. You can move the cursor, change
+  the text next to it, and find out the text and the cursor position.
+  It's efficient for local operations -- that is, when the cursor
+  isn't making long jumps at random.
+
+  It's represented by...
+
+  This representation satisfies these invariants: ...
+
+This serves several purposes:
+
+ * The first part tells me what on object of this type is for -- why I
+   might want to use it, and roughly how.
+
+ * The rest helps me read and modify the implementation. With the
+   "It's represented by..." if I see some code using the
+   representation, I can map what it does back to some operation on
+   the abstract sequence of characters. The invariants tell me what
+   the rest of the class is depending on for its correctness or
+   efficiency. (Sometimes there's more to the invariants than the bare
+   requirement of sanely representing whatever it is we're
+   representing.) With these in hand I can read an individual method's
+   code and see how it makes sense, without having to grok the whole
+   class at once.
+
+From looking at your doc comment, save(), and the output of running
+the program, I conjecture that for this code we could write:
+
+  The sequence of characters is
+    ''.join(self.left_buffer) + ''.join(self.gap_buffer[:self.cursor]) + ''.join(self.right_buffer)
+  and the current position in that sequence, where changes can happen, is
+    len(self.left_buffer) + self.cursor
+
+  with the invariant
+    self.left_buffer is a list of characters
+    self.gap_buffer is a list of characters of length BUFF_LENGTH
+    self.right_buffer is a deque of characters
+    0 <= self.cursor <= BUFF_LENGTH
+
+You might complain that this is kind of a complicated specification to
+write down. That's fair, but it weighs more against the choice of
+representation I'm guessing at here than against writing it out.
+
+How could we simplify it? Just take out self.gap_buffer -- storing
+things in it only substitutes for operations on left_buffer or
+right_buffer that are already constant-time. So, can you rewrite this
+with no self.gap_buffer or self.cursor? Just self.left_buffer and
+right_buffer?
