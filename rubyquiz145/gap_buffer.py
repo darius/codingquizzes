@@ -79,11 +79,11 @@ class GapBuffer(object):
         return text
 
     def show(self):
-        print '[' + ''.join(self.left_buffer) + ']' +\
-              '[' + ''.join(self.gap_buffer[:self.cursor]) +\
-              '\033[91m' + ''.join(self.gap_buffer[self.cursor:]) +\
-              '\033[0m' + ']' +\
-              '[' + ''.join(self.right_buffer) + ']' + '  cursor:' + str(self.cursor)
+        print ('[' + ''.join(self.left_buffer) + ']' +
+               '[' + ''.join(self.gap_buffer[:self.cursor]) +
+               '\033[91m' + ''.join(self.gap_buffer[self.cursor:]) +
+               '\033[0m' + ']' +
+               '[' + ''.join(self.right_buffer) + ']' + '  cursor:' + str(self.cursor))
 
 
 #Test
