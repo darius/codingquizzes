@@ -67,7 +67,7 @@ class GapBuffer(object):
         if self.cursor == 0:
             try:
                 self.left_buffer.pop()
-            except:
+            except IndexError:
                 print('\a')
         else:
             self.cursor -= 1  
