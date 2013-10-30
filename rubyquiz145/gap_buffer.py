@@ -42,9 +42,11 @@ class GapBuffer(object):
             self.cursor -= 1 
         else:
             try:
-                self.right_buffer.appendleft(self.left_buffer.pop())
-            except:
+                char = self.left_buffer.pop()
+            except IndexError:
                 print('\a')
+            else:
+                self.right_buffer.appendleft(char)
 
     def move_right(self):
         if self.cursor < BUFF_LENGTH:
