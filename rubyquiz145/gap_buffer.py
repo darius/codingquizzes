@@ -13,7 +13,7 @@ cursor == 2, means two characters have now been filled with input, e.g.  'fo##'
 (this is what must be saved from the buffer when saving the text)
 
 INVARIANTS holding all the time:
-0 <= cursor < buffer_length
+0 <= cursor <= buffer_length
 
 the size of the gap buffer is fixed:
 
