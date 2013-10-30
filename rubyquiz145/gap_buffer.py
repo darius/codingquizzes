@@ -33,7 +33,7 @@ class GapBuffer(object):
         self.cursor = 0
         
         self.left_buffer = []
-        self.gap_buffer = list('#'*BUFF_LENGTH)
+        self.gap_buffer = ['#'] * BUFF_LENGTH
         self.right_buffer = deque(text)
 
     def move_left(self):
