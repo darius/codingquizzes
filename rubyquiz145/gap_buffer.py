@@ -58,7 +58,6 @@ class GapBuffer(object):
         if self.cursor < BUFF_LENGTH:
             self.gap_buffer[self.cursor] = char
             self.cursor += 1
-            self.cursor = max(self.cursor, self.cursor)
         else:
             self.left_buffer.extend(''.join(self.gap_buffer))
             self.gap_buffer[0] = char
