@@ -59,7 +59,7 @@ class GapBuffer(object):
             self.gap_buffer[self.cursor] = char
             self.cursor += 1
         else:
-            self.left_buffer.extend(''.join(self.gap_buffer))
+            self.left_buffer.extend(self.gap_buffer)
             self.gap_buffer[0] = char
             self.cursor = 1
 
